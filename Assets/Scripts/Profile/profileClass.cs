@@ -23,7 +23,7 @@ public class profileClass : MonoBehaviour {
     [SerializeField] private List<SpriteRenderer> skinAll;
     [SerializeField] private List<SpriteRenderer> hairAll;
    
-
+    [Header("Colores")]
     [SerializeField] private List<colorName> eyesColor;
     [SerializeField] private List<colorName> skinColor;
     [SerializeField] private List<colorName> hairColor;
@@ -42,9 +42,25 @@ public class profileClass : MonoBehaviour {
 
     void Awake()
     {
+        randomP();
+
+    }
+
+    // Use this for initialization
+    void Start () {
+	    
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
+
+    public void randomP()
+    {
         #region Colorchange
 
-        colorName eyeC =eyesColor.RandomItem<colorName>();
+        colorName eyeC = eyesColor.RandomItem<colorName>();
 
         eyeNC = eyeC.nameColor;
 
@@ -68,7 +84,8 @@ public class profileClass : MonoBehaviour {
 
         foreach (var item in hairAll)
         {
-            item.color = hairC.cSolid;        }
+            item.color = hairC.cSolid;
+        }
         #endregion
 
         #region RandomSprites
@@ -96,22 +113,6 @@ public class profileClass : MonoBehaviour {
         }
 
         #endregion
-
-    }
-
-    // Use this for initialization
-    void Start () {
-	    
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-    public void colorChange(SpriteRenderer sp,Color cl)
-    {
-        sp.color = cl;
     }
 
 }

@@ -74,7 +74,8 @@ namespace Extensions.UnityEngine
             int index = global::UnityEngine.Random.Range(0, enumValues.Length);
             return (T)enumValues.GetValue(index);
         }
-        
+
+       
     }
     
 }

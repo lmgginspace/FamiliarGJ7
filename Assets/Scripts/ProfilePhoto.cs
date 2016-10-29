@@ -1,13 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using Extensions.System.Colections;
 
 public class ProfilePhoto : MonoBehaviour {
 
-    float offsetX;
-    float initialX;
-    float initialY;
+    [HideInInspector] float offsetX;
+    [HideInInspector] float initialX;
+    [HideInInspector] float initialY;
 
-    bool draggable;
+   [HideInInspector] bool draggable;
+
+    [HideInInspector] string colorF;
+    [HideInInspector] string partF;
+
+    public List<GameObject> listProf;
+
+    
 
     // Use this for initialization
     void Start () {
@@ -46,9 +55,14 @@ public class ProfilePhoto : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other)
     {
         draggable = false;
+        bool bolAccepted = other.gameObject.name == "Accept" ? true : false;
+        GameManagerOne.Instance.checkFlirt(GameObject.FindGameObjectWithTag("profile").GetComponent<profileClass>(), bolAccepted);
         CountDown countdown = FindObjectOfType(typeof(CountDown)) as CountDown;
         countdown.restart();
+        Destroy(GameObject.FindGameObjectWithTag("profile"));
         transform.position = new Vector3(initialX, initialY, 0.0f);
+        GameObject prof1 = Instantiate(listProf.RandomItem<GameObject>(),transform.position,Quaternion.identity) as GameObject;
+        prof1.transform.SetParent(this.transform, false);
         // TODO: Llamar renueva profile
     }
 }

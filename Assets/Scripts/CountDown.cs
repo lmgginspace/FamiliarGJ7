@@ -9,12 +9,11 @@ public class CountDown : MonoBehaviour {
     public Text timeText;
 
     private float currentTime;
-    private float maxTime;
+    public float maxTime;
     private bool paused;
 
 	// Use this for initialization
 	void Start () {
-        maxTime = 2;
         currentTime = maxTime;
         paused = false;
         timeText.text = maxTime.ToString();
