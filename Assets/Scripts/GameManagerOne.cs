@@ -5,6 +5,9 @@ public class GameManagerOne : MonoBehaviour {
 
     private static GameManagerOne instance = null;
 
+    public string playerGender;
+    public string playerLike;
+
     public static GameManagerOne Instance
     {
         get
