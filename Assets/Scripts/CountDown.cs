@@ -66,7 +66,7 @@ public class CountDown : MonoBehaviour {
 
     public void restart()
     {
-        maxTime -= maxTime * 0.1f * maxTime * 0.2f;
+        maxTime -= maxTime * 0.1f * maxTime * 0.1f;
         currentTime = maxTime;
         paused = false;
         timeText.text = maxTime.ToString();
