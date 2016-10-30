@@ -42,7 +42,11 @@ public class profileClass : MonoBehaviour {
 
     void Awake()
     {
-        randomP();
+        if (gender!="orc" && gender!="cake")
+        {
+            randomP();
+        }
+        
 
     }
 

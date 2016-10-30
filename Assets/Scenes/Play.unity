@@ -343,6 +343,10 @@ MonoBehaviour:
   listProf:
   - {fileID: 1000012232695482, guid: 722bea8279d74724e9c948563e951b82, type: 2}
   - {fileID: 1000012476325072, guid: 0c6ae103b9fb7634fa801a0dac5a500d, type: 2}
+  - {fileID: 1000012232695482, guid: 722bea8279d74724e9c948563e951b82, type: 2}
+  - {fileID: 1000012476325072, guid: 0c6ae103b9fb7634fa801a0dac5a500d, type: 2}
+  - {fileID: 1000014291435528, guid: 7afefe47f704f22458daadc3d188230f, type: 2}
+  - {fileID: 1000010394433256, guid: 6e755a71ae8b6d948b85ff0ef283da60, type: 2}
 --- !u!61 &475961621
 BoxCollider2D:
   m_ObjectHideFlags: 0
