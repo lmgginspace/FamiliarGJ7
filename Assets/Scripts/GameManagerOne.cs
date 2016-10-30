@@ -35,6 +35,7 @@ public class GameManagerOne : MonoBehaviour {
     public AudioClip effectNope;
     public AudioClip effectSexy;
     public AudioClip effectLapsus;
+    public AudioClip effectFlirtOver;
 
     public static GameManagerOne Instance
     {
@@ -64,7 +65,7 @@ public class GameManagerOne : MonoBehaviour {
 
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
         AudioManager.Instance.PlayMusic(music);
-
+        AudioManager.Instance.MusicVolume = 0.5f;
         CountDown.OnTimerEnded += GameManagerOne.Instance.OnTimerEnded;
     }
 
@@ -306,7 +307,7 @@ public class GameManagerOne : MonoBehaviour {
 
         if (activeRule!=null)
         {
-            t1.text = GameManagerOne.Instance.noColor ? "NO " : "ONLY ";
+            t1.text = GameManagerOne.Instance.noColor ? "<color='#FE272EFF'>NO</color> " : "<color='#3FEB34FF'>ONLY</color> ";
             t1.text += GameManagerOne.Instance.activeColor.ToUpper();
 
             switch (GameManagerOne.Instance.activeRule)
@@ -330,6 +331,7 @@ public class GameManagerOne : MonoBehaviour {
 
     public IEnumerator gameOver()
     {
+        AudioManager.Instance.PlaySoundEffect(effectFlirtOver);
         GameManagerOne.instance.gameOverB = true;
         GameObject.FindGameObjectWithTag("scoreText").GetComponent<Text>().text = "Score: " + score;
         float time = 0.0f, totalTime = 1.0f;

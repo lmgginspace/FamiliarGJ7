@@ -72,8 +72,9 @@ MonoBehaviour:
   - eye
   - hair
   - skin
-  music: {fileID: 8300000, guid: bd59ab0a6a6f2d24f923ac29ddfee692, type: 3}
+  music: {fileID: 8300000, guid: b7a87f3ae8e159841b36e6f9ad9f9741, type: 3}
   effectLike: {fileID: 8300000, guid: c03e1afec9d6f664fa63a1b5969dc3fe, type: 3}
   effectNope: {fileID: 8300000, guid: 240b0f7eb7a784d448a13442bfb5a6b7, type: 3}
   effectSexy: {fileID: 8300000, guid: e123d37473bb5ee43a8e30b7c5124432, type: 3}
   effectLapsus: {fileID: 8300000, guid: 41cc6c9a1a5e8af41b16a603199e0426, type: 3}
+  effectFlirtOver: {fileID: 8300000, guid: 6ce59f3bf933b1348b2721a49ac250a6, type: 3}
