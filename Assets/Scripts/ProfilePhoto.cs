@@ -65,10 +65,12 @@ public class ProfilePhoto : MonoBehaviour {
         CountDown countdown = FindObjectOfType(typeof(CountDown)) as CountDown;
         countdown.restart();
         GameManagerOne.Instance.checkFlirt(GameObject.FindGameObjectWithTag("profile").GetComponent<profileClass>(), bolAccepted);
-        Destroy(GameObject.FindGameObjectWithTag("profile"));
-        transform.position = new Vector3(initialX, initialY, 0.0f);
-        GameObject prof1 = Instantiate(listProf.RandomItem<GameObject>(),transform.position,Quaternion.identity) as GameObject;
-        prof1.transform.SetParent(this.transform, false);
-        // TODO: Llamar renueva profile
+        if (!GameManagerOne.Instance.gameOverB)
+        {
+            Destroy(GameObject.FindGameObjectWithTag("profile"));
+            transform.position = new Vector3(initialX, initialY, 0.0f);
+            GameObject prof1 = Instantiate(listProf.RandomItem<GameObject>(),transform.position,Quaternion.identity) as GameObject;
+            prof1.transform.SetParent(this.transform, false);
+        }
     }
 }

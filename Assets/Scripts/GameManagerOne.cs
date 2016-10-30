@@ -30,6 +30,12 @@ public class GameManagerOne : MonoBehaviour {
 
     public List<string> partFaceList;
 
+    public AudioClip music;
+    public AudioClip effectLike;
+    public AudioClip effectNope;
+    public AudioClip effectSexy;
+    public AudioClip effectLapsus;
+
     public static GameManagerOne Instance
     {
         get
@@ -57,6 +63,7 @@ public class GameManagerOne : MonoBehaviour {
         GameObject.DontDestroyOnLoad(this.gameObject);
 
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+        AudioManager.Instance.PlayMusic(music);
     }
 
     void Update()
@@ -94,26 +101,25 @@ public class GameManagerOne : MonoBehaviour {
         else
         {
             SceneManager.LoadScene(scn);
+            AudioManager.Instance.PlaySoundEffect(effectSexy);
         }
         
     } 
 
     public void checkFlirt(profileClass profile, bool like)
     {
-        // Comprobamos el género
+        // Comprobamos el género si es like
         if ((profile.gender == GameManagerOne.Instance.playerLike && like && !GameManagerOne.Instance.lapsus)
-            || (profile.gender != GameManagerOne.Instance.playerLike && !like && !GameManagerOne.Instance.lapsus)
-            || (profile.gender != GameManagerOne.Instance.playerLike && like && GameManagerOne.Instance.lapsus)
-            || (profile.gender == GameManagerOne.Instance.playerLike &&  !like && GameManagerOne.Instance.lapsus))
+            || (profile.gender != GameManagerOne.Instance.playerLike && like && GameManagerOne.Instance.lapsus))
         {
             // Comprobamos la regla activa
-            if(GameManagerOne.Instance.activeRule != null)
+            if (GameManagerOne.Instance.activeRule != null)
             {
                 string profileColor = null;
-                if(GameManagerOne.Instance.activeRule == "hair")
+                if (GameManagerOne.Instance.activeRule == "hair")
                 {
                     profileColor = profile.hairNC;
-                } else if(GameManagerOne.Instance.activeRule == "eye")
+                } else if (GameManagerOne.Instance.activeRule == "eye")
                 {
                     profileColor = profile.eyeNC;
                 } else if (GameManagerOne.Instance.activeRule == "skin")
@@ -121,7 +127,7 @@ public class GameManagerOne : MonoBehaviour {
                     profileColor = profile.skinNC;
                 }
                 //Comprobamos color
-                if ((profileColor == GameManagerOne.Instance.activeColor && !noColor && like) 
+                if ((profileColor == GameManagerOne.Instance.activeColor && !noColor && like)
                     || (profileColor != GameManagerOne.Instance.activeColor && noColor && like)
                     || (profileColor != GameManagerOne.Instance.activeColor && !noColor && !like)
                     || (profileColor == GameManagerOne.Instance.activeColor && noColor && !like))
@@ -136,6 +142,41 @@ public class GameManagerOne : MonoBehaviour {
             } else
             {
                 GameManagerOne.Instance.flirtSuccess("Que");
+            }
+        } // Si es nope a un género que no queremos
+        else if ((profile.gender != GameManagerOne.Instance.playerLike && !like && !GameManagerOne.Instance.lapsus)
+            || (profile.gender == GameManagerOne.Instance.playerLike && !like && GameManagerOne.Instance.lapsus))
+        {
+            GameManagerOne.Instance.flirtSuccess("Que");
+        } // Si es nope a un género que queremos
+        else if ((profile.gender == GameManagerOne.Instance.playerLike && !like && !GameManagerOne.Instance.lapsus)
+            || (profile.gender != GameManagerOne.Instance.playerLike && !like && GameManagerOne.Instance.lapsus))
+        {
+            string profileColor = null;
+            if (GameManagerOne.Instance.activeRule == "hair")
+            {
+                profileColor = profile.hairNC;
+            }
+            else if (GameManagerOne.Instance.activeRule == "eye")
+            {
+                profileColor = profile.eyeNC;
+            }
+            else if (GameManagerOne.Instance.activeRule == "skin")
+            {
+                profileColor = profile.skinNC;
+            }
+            //Comprobamos color
+            if ((profileColor == GameManagerOne.Instance.activeColor && !noColor && like)
+                || (profileColor != GameManagerOne.Instance.activeColor && noColor && like)
+                || (profileColor != GameManagerOne.Instance.activeColor && !noColor && !like)
+                || (profileColor == GameManagerOne.Instance.activeColor && noColor && !like))
+            {
+                GameManagerOne.Instance.flirtSuccess("Que");
+            }
+            else
+            {
+                // No es el color correcto, restamos una vida
+                GameManagerOne.Instance.flirtFailure("putaso");
             }
         } else
         {
@@ -167,6 +208,7 @@ public class GameManagerOne : MonoBehaviour {
             }
         }
         GameManagerOne.Instance.score += 10;
+        AudioManager.Instance.PlaySoundEffect(effectLike);
     }
 
     public void flirtFailure(string gender)
@@ -185,7 +227,7 @@ public class GameManagerOne : MonoBehaviour {
             {
                 GameManagerOne.Instance.StartCoroutine(GameManagerOne.Instance.gameOver());            }
         }
-
+        AudioManager.Instance.PlaySoundEffect(effectNope);
     }
 
     public void randomRule()
@@ -225,10 +267,18 @@ public class GameManagerOne : MonoBehaviour {
             case 3:
                 GameManagerOne.Instance.randomTender = Random.Range(3, 5);
                 GameManagerOne.Instance.lapsus = RandomUtil.Chance(0.5f);
+                if(!previousLapsus && GameManagerOne.Instance.lapsus)
+                {
+                    AudioManager.Instance.PlaySoundEffect(effectLapsus);
+                }
                 break;
             default:
                 GameManagerOne.Instance.randomTender = Random.Range(2, 4);
                 GameManagerOne.Instance.lapsus = RandomUtil.Chance(0.5f);
+                if (!previousLapsus && GameManagerOne.Instance.lapsus)
+                {
+                    AudioManager.Instance.PlaySoundEffect(effectLapsus);
+                }
                 break;
         }
 
