@@ -64,6 +64,19 @@ public class GameManagerOne : MonoBehaviour {
 
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
         AudioManager.Instance.PlayMusic(music);
+
+        CountDown.OnTimerEnded += GameManagerOne.Instance.OnTimerEnded;
+    }
+
+    private void OnDestroy()
+    {
+        CountDown.OnTimerEnded -= GameManagerOne.Instance.OnTimerEnded;
+    }
+
+    private void OnTimerEnded()
+    {
+        GameManagerOne.Instance.flirtFailure("putita");
+        
     }
 
     void Update()

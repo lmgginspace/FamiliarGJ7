@@ -23,10 +23,22 @@ public class ProfilePhoto : MonoBehaviour {
         initialX = transform.position.x;
         initialY = transform.position.y;
         draggable = true;
+
+        CountDown.OnTimerEnded += CountDown_OnTimerEnded;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void OnDestroy()
+    {
+        CountDown.OnTimerEnded -= CountDown_OnTimerEnded;
+    }
+
+    private void CountDown_OnTimerEnded()
+    {
+        newPhoto();
+    }
+
+    // Update is called once per frame
+    void Update () {
         if(GameManagerOne.Instance.gameOverB){
             draggable = false;
         }
@@ -67,10 +79,15 @@ public class ProfilePhoto : MonoBehaviour {
         GameManagerOne.Instance.checkFlirt(GameObject.FindGameObjectWithTag("profile").GetComponent<profileClass>(), bolAccepted);
         if (!GameManagerOne.Instance.gameOverB)
         {
-            Destroy(GameObject.FindGameObjectWithTag("profile"));
-            transform.position = new Vector3(initialX, initialY, 0.0f);
-            GameObject prof1 = Instantiate(listProf.RandomItem<GameObject>(),transform.position,Quaternion.identity) as GameObject;
-            prof1.transform.SetParent(this.transform, false);
+            newPhoto();
         }
+    }
+
+    public void newPhoto()
+    {
+        Destroy(GameObject.FindGameObjectWithTag("profile"));
+        transform.position = new Vector3(initialX, initialY, 0.0f);
+        GameObject prof1 = Instantiate(listProf.RandomItem<GameObject>(), transform.position, Quaternion.identity) as GameObject;
+        prof1.transform.SetParent(this.transform, false);
     }
 }

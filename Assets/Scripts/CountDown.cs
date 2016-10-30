@@ -12,6 +12,9 @@ public class CountDown : MonoBehaviour {
     public float maxTime;
     private bool paused;
 
+
+    public static event System.Action OnTimerEnded = delegate { };
+
     // Use this for initialization
 
 
@@ -35,20 +38,30 @@ public class CountDown : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (!paused)
+        if (!paused && !GameManagerOne.Instance.gameOverB)
         {
             currentTime -= Time.deltaTime;
             if(currentTime < 0)
             {
-                currentTime = 0;
-                paused = true;
-                // TODO: Llamar GameOver
+                
+                CountDown.OnTimerEnded();
+                if (GameManagerOne.Instance.gameOverB)
+                {
+                    paused = true;
+                }
+                else
+                {
+                    restart();
+                }
+               
+               
             }
             float ratio = currentTime / maxTime;
 
             currentTimeBar.rectTransform.localScale = new Vector3(ratio, 1, 1);
             timeText.text = (currentTime * 100).ToString("0");
         }
+
 	}
 
     public void restart()
