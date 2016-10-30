@@ -20,8 +20,11 @@ public class LapsusController : MonoBehaviour
     [SerializeField]
     private Sprite heteroSprite;
 
+    private Image image;
+
     private void Start()
     {
+        this.image = this.GetComponent<Image>();
         GameManagerOne.Instance.OnLapsusChanged += this.OnLapsusChanged;
         this.gameObject.SetActive(false);
     }
@@ -36,13 +39,12 @@ public class LapsusController : MonoBehaviour
 
     public void Show()
     {
-        Image sr = this.GetComponent<Image>();
-        if (sr != null)
+        if (this.image != null)
         {
             if (GameManagerOne.Instance.PlayerIsHomosexual)
-                sr.sprite = this.heteroSprite;
+                this.image.sprite = this.heteroSprite;
             else
-                sr.sprite = this.homoSprite;
+                this.image.sprite = this.homoSprite;
         }
 
         this.gameObject.SetActive(true);
