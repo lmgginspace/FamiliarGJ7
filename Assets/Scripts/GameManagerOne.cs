@@ -45,6 +45,7 @@ public class GameManagerOne : MonoBehaviour {
 
     public event System.Action OnRuleChanged = delegate { };
     public event System.Action<bool> OnLapsusChanged = delegate { };
+    public event System.Action<int> OnLifesChanged = delegate { };
 
     void Awake()
     {
@@ -56,6 +57,14 @@ public class GameManagerOne : MonoBehaviour {
         GameObject.DontDestroyOnLoad(this.gameObject);
 
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+    }
+
+    void Update()
+    {
+        if (SceneManager.GetActiveScene().name=="Play")
+        {
+            GameObject.FindGameObjectWithTag("scorePlayText").GetComponent<Text>().text = "Score: " + GameManagerOne.Instance.score;
+        }
     }
 
     private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
@@ -111,8 +120,11 @@ public class GameManagerOne : MonoBehaviour {
                 {
                     profileColor = profile.skinNC;
                 }
-                if ((profileColor == GameManagerOne.Instance.activeColor && !noColor) 
-                    || (profileColor != GameManagerOne.Instance.activeColor && noColor))
+                //Comprobamos color
+                if ((profileColor == GameManagerOne.Instance.activeColor && !noColor && like) 
+                    || (profileColor != GameManagerOne.Instance.activeColor && noColor && like)
+                    || (profileColor != GameManagerOne.Instance.activeColor && !noColor && !like)
+                    || (profileColor == GameManagerOne.Instance.activeColor && noColor && !like))
                 {
                     GameManagerOne.Instance.flirtSuccess("Que");
                 }
@@ -128,19 +140,19 @@ public class GameManagerOne : MonoBehaviour {
         } else
         {
             // No es el genero correcto, restamos una vida
-            flirtFailure("putaso");
+            GameManagerOne.Instance.flirtFailure("putaso");
         }
-        
-        // Revisamos el cambio de regla
-        tenderCount++;
-        if (tenderCount >= randomTender)
-        {
-            countLevel++;
-            randomRule();
-            randomLevelN();
-            tenderCount = 0;
 
-            this.OnRuleChanged();
+        // Revisamos el cambio de regla
+        GameManagerOne.Instance.tenderCount++;
+        if (GameManagerOne.Instance.tenderCount >= GameManagerOne.Instance.randomTender)
+        {
+            GameManagerOne.Instance.countLevel++;
+            GameManagerOne.Instance.randomRule();
+            GameManagerOne.Instance.randomLevelN();
+            GameManagerOne.Instance.tenderCount = 0;
+
+            GameManagerOne.Instance.OnRuleChanged();
         }
     }
 
@@ -148,12 +160,13 @@ public class GameManagerOne : MonoBehaviour {
     {
         if (gender=="cake")
         {
-            if (lifes<3)
+            if (GameManagerOne.Instance.lifes <3)
             {
-            lifes++;
+                GameManagerOne.Instance.lifes++;
+                GameManagerOne.Instance.OnLifesChanged(GameManagerOne.Instance.lifes);
             }
         }
-        score += 10;
+        GameManagerOne.Instance.score += 10;
     }
 
     public void flirtFailure(string gender)
@@ -161,11 +174,14 @@ public class GameManagerOne : MonoBehaviour {
         if (gender=="orc")
         {
             GameManagerOne.Instance.StartCoroutine(GameManagerOne.Instance.gameOver());
+            GameManagerOne.Instance.lifes = 0;
+            GameManagerOne.Instance.OnLifesChanged(GameManagerOne.Instance.lifes);
         }
         else
         {
             GameManagerOne.Instance.lifes--;
-            if (lifes<=0)
+            GameManagerOne.Instance.OnLifesChanged(GameManagerOne.Instance.lifes);
+            if (GameManagerOne.Instance.lifes <=0)
             {
                 GameManagerOne.Instance.StartCoroutine(GameManagerOne.Instance.gameOver());            }
         }
@@ -174,24 +190,24 @@ public class GameManagerOne : MonoBehaviour {
 
     public void randomRule()
     {
-        
-        activeRule =partFaceList.RandomItem<string>();
-        switch (activeRule)
+
+        GameManagerOne.Instance.activeRule = GameManagerOne.Instance.partFaceList.RandomItem<string>();
+        switch (GameManagerOne.Instance.activeRule)
         {
             case "eye":
-                activeColor = colorEyeN.RandomItem<string>();
-                noColor = RandomUtil.Chance(0.5f);
+                GameManagerOne.Instance.activeColor = colorEyeN.RandomItem<string>();
+                GameManagerOne.Instance.noColor = RandomUtil.Chance(0.5f);
                 break;
             case "hair":
-                activeColor = colorHairN.RandomItem<string>();
-                noColor = RandomUtil.Chance(0.5f);
+                GameManagerOne.Instance.activeColor = colorHairN.RandomItem<string>();
+                GameManagerOne.Instance.noColor = RandomUtil.Chance(0.5f);
                 break;
             case "skin":
-                activeColor = colorSkinN.RandomItem<string>();
-                noColor = RandomUtil.Chance(0.5f);
+                GameManagerOne.Instance.activeColor = colorSkinN.RandomItem<string>();
+                GameManagerOne.Instance.noColor = RandomUtil.Chance(0.5f);
                 break;
         }
-        ruleText(GameObject.FindGameObjectWithTag("ruleText").GetComponent<Text>());
+        GameManagerOne.Instance.ruleText(GameObject.FindGameObjectWithTag("ruleText").GetComponent<Text>());
     }
 
     public void randomLevelN()
@@ -201,18 +217,18 @@ public class GameManagerOne : MonoBehaviour {
         switch (countLevel)
         {
             case 1:
-                randomTender = Random.Range(5,9);
+                GameManagerOne.Instance.randomTender = Random.Range(5,9);
                 break;
             case 2:
-                randomTender = Random.Range(4, 7);
+                GameManagerOne.Instance.randomTender = Random.Range(4, 7);
                 break;
             case 3:
-                randomTender = Random.Range(3, 5);
-                lapsus = RandomUtil.Chance(0.5f);
+                GameManagerOne.Instance.randomTender = Random.Range(3, 5);
+                GameManagerOne.Instance.lapsus = RandomUtil.Chance(0.5f);
                 break;
             default:
-                randomTender = Random.Range(2, 4);
-                lapsus = RandomUtil.Chance(0.5f);
+                GameManagerOne.Instance.randomTender = Random.Range(2, 4);
+                GameManagerOne.Instance.lapsus = RandomUtil.Chance(0.5f);
                 break;
         }
 
@@ -227,10 +243,10 @@ public class GameManagerOne : MonoBehaviour {
 
         if (activeRule!=null)
         {
-            t1.text = noColor ? "NO " : "ONLY ";
-            t1.text += activeColor.ToUpper();
+            t1.text = GameManagerOne.Instance.noColor ? "NO " : "ONLY ";
+            t1.text += GameManagerOne.Instance.activeColor.ToUpper();
 
-            switch (activeRule)
+            switch (GameManagerOne.Instance.activeRule)
             {
                 case "eye":
                     t1.text += " EYES";
