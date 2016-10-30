@@ -71,18 +71,7 @@ public class LogoSceneManager : MonoBehaviour
     // Métodos auxiliares
     private void LoadNextScene()
     {
-        Scene nextScene, currentScene = SceneManager.GetActiveScene();
-        int nextSceneIndex = currentScene.buildIndex + 1;
-
-        try
-        {
-            nextScene = SceneManager.GetSceneAt(nextSceneIndex);
-            SceneManager.LoadScene(nextSceneIndex);
-        }
-        catch (Exception e)
-        {
-            Debug.LogWarningFormat("Unable to load next scene. Error: {0}", e.Message);
-        }
+        SceneManager.LoadScene("Main menu");
     }
 
     // Corrutinas

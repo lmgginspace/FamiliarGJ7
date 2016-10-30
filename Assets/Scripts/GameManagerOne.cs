@@ -375,4 +375,9 @@ public class GameManagerOne : MonoBehaviour {
         }
     }
 
+    public void exitGame()
+    {
+        Application.Quit();
+    }
+
 }
