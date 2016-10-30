@@ -228,5 +228,36 @@ public class GameManagerOne : MonoBehaviour {
             t1.text = string.Empty;
         }
     }
-    
+
+    public void setPlayerGenderMale(bool sel)
+    {
+        if (sel)
+        {
+            GameManagerOne.Instance.playerGender = "male";
+        }
+    }
+
+    public void setPlayerGenderFemale(bool sel)
+    {
+        if (sel)
+        {
+            GameManagerOne.Instance.playerGender = "female";
+        }
+    }
+
+    public void setPlayerLikeFemale(bool sel)
+    {
+        if (sel)
+        {
+            GameManagerOne.Instance.playerLike = "female";
+        }
+    }
+
+    public void setPlayerLikeMale(bool sel)
+    {
+        if (sel)
+        {
+            GameManagerOne.Instance.playerLike = "male";
+        }
+    }
 }
