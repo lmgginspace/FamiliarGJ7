@@ -53,64 +53,67 @@ public class GameManagerOne : MonoBehaviour {
     {
         if (arg0.name == "Play")
         {
-            tenderCount = 0;
-            countLevel = 0;
-            score = 0;
-            lifes = 3;
-            activeColor = null;
-            activeRule = null;
-            lapsus = false;
+            GameManagerOne.Instance.tenderCount = 0;
+            GameManagerOne.Instance.countLevel = 0;
+            GameManagerOne.Instance.score = 0;
+            GameManagerOne.Instance.lifes = 3;
+            GameManagerOne.Instance.activeColor = null;
+            GameManagerOne.Instance.activeRule = null;
+            GameManagerOne.Instance.lapsus = false;
 
-            randomTender = Random.Range(6, 11);
+            GameManagerOne.Instance.randomTender = Random.Range(6, 11);
 
         }
     }
 
-    // Use this for initialization
-    void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	    
-	}
+    public void loadiScene(string scn)
+    {
+        if (scn=="reset")
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        else
+        {
+            SceneManager.LoadScene(scn);
+        }
+        
+    } 
 
     public void checkFlirt(profileClass profile, bool like)
     {
         // Comprobamos el género
-        if ((profile.gender == playerLike && like && !lapsus)
-            || (profile.gender != playerLike && !like && !lapsus)
-            || (profile.gender != playerLike && like && lapsus)
-            || (profile.gender == playerLike &&  !like && lapsus))
+        if ((profile.gender == GameManagerOne.Instance.playerLike && like && !GameManagerOne.Instance.lapsus)
+            || (profile.gender != GameManagerOne.Instance.playerLike && !like && !GameManagerOne.Instance.lapsus)
+            || (profile.gender != GameManagerOne.Instance.playerLike && like && GameManagerOne.Instance.lapsus)
+            || (profile.gender == GameManagerOne.Instance.playerLike &&  !like && GameManagerOne.Instance.lapsus))
         {
             // Comprobamos la regla activa
-            if(activeRule != null)
+            if(GameManagerOne.Instance.activeRule != null)
             {
                 string profileColor = null;
-                if(activeRule == "hair")
+                if(GameManagerOne.Instance.activeRule == "hair")
                 {
                     profileColor = profile.hairNC;
-                } else if(activeRule == "eye")
+                } else if(GameManagerOne.Instance.activeRule == "eye")
                 {
                     profileColor = profile.eyeNC;
-                } else if (activeRule == "skin")
+                } else if (GameManagerOne.Instance.activeRule == "skin")
                 {
                     profileColor = profile.skinNC;
                 }
-                if ((profileColor == activeColor && !noColor) 
-                    || (profileColor != activeColor && noColor))
+                if ((profileColor == GameManagerOne.Instance.activeColor && !noColor) 
+                    || (profileColor != GameManagerOne.Instance.activeColor && noColor))
                 {
-                    flirtSuccess("Que");
+                    GameManagerOne.Instance.flirtSuccess("Que");
                 }
                 else
                 {
                     // No es el color correcto, restamos una vida
-                    flirtFailure("putaso");
+                    GameManagerOne.Instance.flirtFailure("putaso");
                 }
             } else
             {
-                flirtSuccess("Que");
+                GameManagerOne.Instance.flirtSuccess("Que");
             }
         } else
         {
@@ -144,11 +147,11 @@ public class GameManagerOne : MonoBehaviour {
     {
         if (gender=="orc")
         {
-            //gameOver
+            GameManagerOne.Instance.StartCoroutine(GameManagerOne.Instance.gameOver());
         }
         else
         {
-            lifes--;
+            GameManagerOne.Instance.lifes--;
             if (lifes<=0)
             {
                 //gameOver
@@ -226,6 +229,18 @@ public class GameManagerOne : MonoBehaviour {
         else
         {
             t1.text = string.Empty;
+        }
+    }
+
+    public IEnumerator gameOver()
+    {
+        GameObject.FindGameObjectWithTag("scoreText").GetComponent<Text>().text = "Score: " + score;
+        float time = 0.0f, totalTime = 1.0f;
+        while (time < totalTime)
+        {
+            time += Time.deltaTime;
+            GameObject.FindGameObjectWithTag("gOScreen").GetComponent<CanvasGroup>().alpha = time;
+            yield return null;
         }
     }
     
