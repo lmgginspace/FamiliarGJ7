@@ -25,16 +25,21 @@ public class LapsusController : MonoBehaviour
     private void Start()
     {
         this.image = this.GetComponent<Image>();
-        GameManagerOne.Instance.OnLapsusChanged += this.OnLapsusChanged;
-        this.gameObject.SetActive(false);
+        GameManagerOne.Instance.OnLapsusChanged += OnLapsusChanged;
+        gameObject.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        GameManagerOne.Instance.OnLapsusChanged -= OnLapsusChanged;
     }
 
     private void OnLapsusChanged(bool currentLapsusStatus)
     {
         if (currentLapsusStatus)
-            this.Show();
+            Show();
         else
-            this.Hide();
+            Hide();
     }
 
     public void Show()
@@ -47,9 +52,9 @@ public class LapsusController : MonoBehaviour
                 this.image.sprite = this.homoSprite;
         }
 
-        this.gameObject.SetActive(true);
+        gameObject.SetActive(true);
 
-        this.StartCoroutine(this.ShowCorroutine());
+        StartCoroutine(this.ShowCorroutine());
 	}
 	
 	public void Hide()
