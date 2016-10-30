@@ -27,7 +27,9 @@ public class ProfilePhoto : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+        if(GameManagerOne.Instance.gameOverB){
+            draggable = false;
+        }
 	}
 
     void OnMouseDown()
@@ -48,17 +50,21 @@ public class ProfilePhoto : MonoBehaviour {
 
     void OnMouseUp()
     {
-        transform.position = new Vector3(initialX, initialY, 0.0f);
-        draggable = true;
+        if (!GameManagerOne.Instance.gameOverB)
+        {
+            transform.position = new Vector3(initialX, initialY, 0.0f);
+            draggable = true;
+        }
+        
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         draggable = false;
         bool bolAccepted = other.gameObject.name == "Accept" ? true : false;
-        GameManagerOne.Instance.checkFlirt(GameObject.FindGameObjectWithTag("profile").GetComponent<profileClass>(), bolAccepted);
         CountDown countdown = FindObjectOfType(typeof(CountDown)) as CountDown;
         countdown.restart();
+        GameManagerOne.Instance.checkFlirt(GameObject.FindGameObjectWithTag("profile").GetComponent<profileClass>(), bolAccepted);
         Destroy(GameObject.FindGameObjectWithTag("profile"));
         transform.position = new Vector3(initialX, initialY, 0.0f);
         GameObject prof1 = Instantiate(listProf.RandomItem<GameObject>(),transform.position,Quaternion.identity) as GameObject;

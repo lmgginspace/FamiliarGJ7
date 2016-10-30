@@ -12,16 +12,29 @@ public class CountDown : MonoBehaviour {
     public float maxTime;
     private bool paused;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+
+
+    void Start () {
         currentTime = maxTime;
         paused = false;
         timeText.text = maxTime.ToString();
-	
+
+        GameManagerOne.Instance.OnRuleChanged += Instance_OnRuleChanged;
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void OnDestroy()
+    {
+        GameManagerOne.Instance.OnRuleChanged -= Instance_OnRuleChanged;
+    }
+
+    private void Instance_OnRuleChanged()
+    {
+        this.PauseForSeconds(1.0f);
+    }
+
+    // Update is called once per frame
+    void Update () {
         if (!paused)
         {
             currentTime -= Time.deltaTime;
@@ -45,4 +58,22 @@ public class CountDown : MonoBehaviour {
         paused = false;
         timeText.text = maxTime.ToString();
     }
+
+    public void PauseForSeconds(float seconds)
+    {
+        this.StartCoroutine(this.PauseCorroutine(seconds));
+    }
+
+    private IEnumerator PauseCorroutine(float seconds)
+    {
+        this.paused = true;
+        float time = 0.0f;
+        while (time < seconds)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        this.paused = false;
+    }
+
 }

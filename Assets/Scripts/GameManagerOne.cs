@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+﻿using Extensions.System.Colections;
+using Extensions.UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
-using Extensions.System.Colections;
-using Extensions.UnityEngine;
 using UnityEngine.UI;
 
 public class GameManagerOne : MonoBehaviour {
@@ -16,6 +16,7 @@ public class GameManagerOne : MonoBehaviour {
     private string activeColor;
     private bool lapsus;
     private bool noColor;
+    public bool gameOverB=false;
 
     private int tenderCount;
     private int randomTender;
@@ -36,6 +37,14 @@ public class GameManagerOne : MonoBehaviour {
             return GameManagerOne.instance;
         }
     }
+
+    public bool PlayerIsHomosexual
+    {
+        get { return GameManagerOne.Instance.playerGender == GameManagerOne.instance.playerLike; }
+    }
+
+    public event System.Action OnRuleChanged = delegate { };
+    public event System.Action<bool> OnLapsusChanged = delegate { };
 
     void Awake()
     {
@@ -60,6 +69,7 @@ public class GameManagerOne : MonoBehaviour {
             GameManagerOne.Instance.activeColor = null;
             GameManagerOne.Instance.activeRule = null;
             GameManagerOne.Instance.lapsus = false;
+            GameManagerOne.Instance.gameOverB = false;
 
             GameManagerOne.Instance.randomTender = Random.Range(6, 11);
 
@@ -120,6 +130,7 @@ public class GameManagerOne : MonoBehaviour {
             // No es el genero correcto, restamos una vida
             flirtFailure("putaso");
         }
+        
         // Revisamos el cambio de regla
         tenderCount++;
         if (tenderCount >= randomTender)
@@ -128,6 +139,8 @@ public class GameManagerOne : MonoBehaviour {
             randomRule();
             randomLevelN();
             tenderCount = 0;
+
+            this.OnRuleChanged();
         }
     }
 
@@ -154,8 +167,7 @@ public class GameManagerOne : MonoBehaviour {
             GameManagerOne.Instance.lifes--;
             if (lifes<=0)
             {
-                //gameOver
-            }
+                GameManagerOne.Instance.StartCoroutine(GameManagerOne.Instance.gameOver());            }
         }
 
     }
@@ -184,6 +196,8 @@ public class GameManagerOne : MonoBehaviour {
 
     public void randomLevelN()
     {
+        bool previousLapsus = GameManagerOne.Instance.lapsus;
+
         switch (countLevel)
         {
             case 1:
@@ -201,6 +215,9 @@ public class GameManagerOne : MonoBehaviour {
                 lapsus = RandomUtil.Chance(0.5f);
                 break;
         }
+
+        if (previousLapsus != GameManagerOne.Instance.lapsus)
+            GameManagerOne.Instance.OnLapsusChanged(GameManagerOne.Instance.lapsus);
     }
 
     public void ruleText(Text t1)
@@ -234,6 +251,7 @@ public class GameManagerOne : MonoBehaviour {
 
     public IEnumerator gameOver()
     {
+        GameManagerOne.instance.gameOverB = true;
         GameObject.FindGameObjectWithTag("scoreText").GetComponent<Text>().text = "Score: " + score;
         float time = 0.0f, totalTime = 1.0f;
         while (time < totalTime)

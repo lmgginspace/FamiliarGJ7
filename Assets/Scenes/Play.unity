@@ -127,7 +127,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010815730862, guid: c30ce4a63a1a8544080f1b035626cb71, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c30ce4a63a1a8544080f1b035626cb71, type: 2}
@@ -144,7 +144,7 @@ GameObject:
   - 114: {fileID: 233594604}
   m_Layer: 5
   m_Name: scoreText
-  m_TagString: Untagged
+  m_TagString: scoreText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -217,7 +217,7 @@ GameObject:
   - 225: {fileID: 306606481}
   m_Layer: 5
   m_Name: GameOverScream
-  m_TagString: Untagged
+  m_TagString: gOScreen
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -478,6 +478,7 @@ GameObject:
   - 222: {fileID: 844056099}
   - 114: {fileID: 844056098}
   - 114: {fileID: 844056097}
+  - 114: {fileID: 844056100}
   m_Layer: 5
   m_Name: RuleText
   m_TagString: ruleText
@@ -549,15 +550,46 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '
-
-'
+  m_Text: Rule <color="3f3f3f">text</color>
 --- !u!222 &844056099
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 844056095}
+--- !u!114 &844056100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 844056095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e62873e836a06aa49a71ad4793072fd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 0.5
+      value: 1.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  animationTime: 1
 --- !u!1001 &852317760
 Prefab:
   m_ObjectHideFlags: 0
@@ -610,6 +642,7 @@ GameObject:
   - 224: {fileID: 923968753}
   - 222: {fileID: 923968755}
   - 114: {fileID: 923968754}
+  - 114: {fileID: 923968756}
   m_Layer: 5
   m_Name: Lapsus
   m_TagString: Untagged
@@ -654,9 +687,9 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: bf69270a85b89a0428073e8720fb1b42, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 27676fc6aa8b8984d9b73004c09fbfc3, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -668,6 +701,68 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 923968752}
+--- !u!114 &923968756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 923968752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d9add28713a7384b9bfad8eff2e656b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 0.7278217
+      value: 1.2002599
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 0.833859
+      value: 0.7210563
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 0.9358498
+      value: 1.0788311
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  hideCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  showTime: 1
+  hideTime: 0.5
+  homoSprite: {fileID: 21300000, guid: 27676fc6aa8b8984d9b73004c09fbfc3, type: 3}
+  heteroSprite: {fileID: 21300000, guid: bf69270a85b89a0428073e8720fb1b42, type: 3}
 --- !u!1 &968627525
 GameObject:
   m_ObjectHideFlags: 0
@@ -742,7 +837,7 @@ SpriteRenderer:
   m_SortingLayerID: 2054786093
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 7b91ddf167de2f34bb1181923d0e31f1, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!4 &1104610771 stripped
@@ -842,7 +937,7 @@ RectTransform:
   - {fileID: 923968753}
   - {fileID: 306606480}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -903,7 +998,7 @@ Prefab:
     - target: {fileID: 224000011159832448, guid: 79c7667aa1572be4f8ef84cc980d83ec,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -85.25
+      value: 222
       objectReference: {fileID: 0}
     - target: {fileID: 224000011159832448, guid: 79c7667aa1572be4f8ef84cc980d83ec,
         type: 2}
@@ -923,7 +1018,7 @@ Prefab:
     - target: {fileID: 224000011159832448, guid: 79c7667aa1572be4f8ef84cc980d83ec,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224000011159832448, guid: 79c7667aa1572be4f8ef84cc980d83ec,
         type: 2}
@@ -933,7 +1028,7 @@ Prefab:
     - target: {fileID: 224000011159832448, guid: 79c7667aa1572be4f8ef84cc980d83ec,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224000011159832448, guid: 79c7667aa1572be4f8ef84cc980d83ec,
         type: 2}
@@ -943,7 +1038,7 @@ Prefab:
     - target: {fileID: 224000011159832448, guid: 79c7667aa1572be4f8ef84cc980d83ec,
         type: 2}
       propertyPath: m_Pivot.y
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1000012179610528, guid: 79c7667aa1572be4f8ef84cc980d83ec, type: 2}
       propertyPath: m_IsActive
@@ -1140,7 +1235,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!1 &1565641387
 GameObject:
   m_ObjectHideFlags: 0
@@ -1227,7 +1322,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!1 &1601799177
 GameObject:
   m_ObjectHideFlags: 0
@@ -1503,7 +1598,7 @@ SpriteRenderer:
   m_SortingLayerID: 2054786093
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 7067e912e778bbd44a2dcb5cb34fd21b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!114 &1810358606 stripped
@@ -1542,7 +1637,7 @@ Transform:
   - {fileID: 1772118131}
   - {fileID: 968627526}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1 &1933544033
 GameObject:
   m_ObjectHideFlags: 0
@@ -1598,7 +1693,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 4d939934cf9f16648a9d09b8cdb79ca6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 21e8d1e9eb7dc6e42bc466758c4b5079, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
